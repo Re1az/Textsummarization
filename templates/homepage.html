@@ -1,0 +1,50 @@
+{% extends "base.html" %} {% block content %}
+<section class="hero">
+  <div class="hero-content">
+    <h1>Summarize Smarter, Not Harder</h1>
+    <p>Transform long texts into concise, clear summaries with our AI-powered tool. Fast, easy, and accurate.</p>
+
+    <form class="demo-box" method="GET" action="{% url 'home' %}">
+      {% csrf_token %}
+      <button type="submit">Start Summarize</button>
+    </form>
+  </div>
+
+  <div class="hero-image">
+    <img src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png" alt="AI summarizer">
+  </div>
+</section>
+
+
+<section class="features">
+  <h2>Why Choose Our Summarizer?</h2>
+  <div class="features-grid">
+    <div class="feature-card">
+      <i class="bi bi-lightning-charge text-success fs-3"></i>
+      <h4>Instant Results</h4>
+      <p>Summarize long documents within seconds using cutting-edge NLP models.</p>
+    </div>
+    <div class="feature-card">
+      <i class="bi bi-check-circle text-success fs-3"></i>
+      <h4>Mostly Accurate </h4>
+      <p>Our summaries maintain key ideas and remove unecesaary keys  automatically.</p>
+    </div>
+    <div class="feature-card">
+      <i class="bi bi-lock text-success fs-3"></i>
+      <h4>Time saving</h4>
+      <p>It is easy to use and reliable, this automatically save time</p>
+    </div>
+  </div>
+</section>
+
+
+<section class="how-it-works">
+  <h2>How It Works</h2>
+  <div class="step">1. Click the button Start sumarize .</div>
+  <div class="step">2. Paste your text in the box .</div>
+  <div class="step">3. Hit "Summarize" and wait a second.</div>
+  <div class="step">4. Get a clean, concise summary instantly.</div>
+  <div class="step" textalign="center">Enjoy!!</div>
+</section>
+
+{% endblock content %}

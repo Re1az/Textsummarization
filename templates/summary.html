@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Home | Text Summarizer{% endblock title %}
+
+{% block content %}
+<main>
+    <h2 align="center" class="fw-bold mt-3">Online Text Summarizing Tool</h2>
+
+    {% if message %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endif %}
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <div class="mt-3 d-flex justify-content-center gap-2">
+        <button class="btn btn-warning" id="copytext">Copy</button>
+        <button class="btn btn-info" id="pastetext">Paste</button>
+    </div>
+
+    <form method="post" action="{% url 'home' %}">
+        {% csrf_token %}
+        <div class="d-flex flex-wrap justify-content-center mt-3 gap-4">
+            <!-- Original Text Section -->
+            <div class="shadow-lg rounded p-3">
+                <label for="texta" class="fw-bold">Enter Your Text</label>
+                <div class="mt-2">
+                    <textarea id="texta" name="summary" class="form-control" rows="12" placeholder="Enter or paste your text here">{% if text %}{{ text }}{% endif %}</textarea>
+                </div>
+
+                <div class="mt-3">
+                    <label for="Input">Minimun Number of Sentences should be 3: <span id="rangeValue">{% if summary_num %}{{ summary_num }}{% else %}0{% endif %}</span></label>
+                    <input type="range" class="form-range" name="rangeInput" id="rangeInput" min="3" max="3"  {% if summary_num %} value="{{ summary_num }}" {% else %}value=""{% endif %}>
+                </div>
+
+                {% if length and sentcount %}
+                <div class="mt-2 fw-bold">
+                    <span>{{ length }} words | {{ sentcount }} sentences</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Summary Output Section -->
+            <div class="shadow-lg rounded p-3">
+                <label for="textb" class="fw-bold">Generated Summary</label>
+                <div class="mt-2">
+                    <textarea id="textb" class="form-control" rows="12" readonly>{% if summary %}{{ summary }}{% endif %}</textarea>
+                </div>
+
+                {% if keywords %}
+                    <div class="mt-2">
+                        <span class="fw-bold">Keywords:</span> {{ keywords|join:", " }}
+                    </div>
+                {% endif %}
+
+                {% if title %}
+                    <div class="mt-2">
+                        <span class="fw-bold">Title:</span> {{ title }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="mt-4 d-flex justify-content-center">
+            <button type="submit" class="btn btn-success">Summarize</button>
+        </div>
+    </form>
+</main>
+
+<script>
+    const copyBtn = document.getElementById('copytext');
+    const pasteBtn = document.getElementById('pastetext');
+    const inputText = document.getElementById('texta');
+    const rangeInput = document.getElementById('rangeInput');
+    const rangeValue = document.getElementById('rangeValue');
+
+    pasteBtn.addEventListener('click', () => {
+        navigator.clipboard.readText().then(text => {
+            inputText.value = text;
+        }).catch(err => {
+            console.error('Failed to read clipboard contents: ', err);
+        });
+    });
+
+    copyBtn.addEventListener('click', () => {
+        inputText.select();
+        document.execCommand('copy');
+    });
+
+    rangeInput.addEventListener('input', () => {
+        rangeValue.textContent = rangeInput.value;
+    });
+</script>
+{% endblock content %}

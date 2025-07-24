@@ -1,0 +1,11 @@
+colorama==0.4.6
+Django==5.2
+django-bootstrap5==25.1
+joblib==1.4.2
+nltk==3.9.1
+regex==2024.11.6
+scikit-learn==1.2.2
+numpy==1.24.3
+sqlparse==0.5.3
+tqdm==4.67.1
+tzdata==2025.2
